@@ -21,11 +21,14 @@
   padding:0px 10px;
   line-height:2rem;min-width:65px;font-size:1rem;max-width:366px;}
 
-.hideDivCls {
+.tweetdivcls {
     padding: 10px;
     text-align: justify;
-    margin-top: 20px;
-    display: none;
+    margin-top: 20px;    
+}
+
+.hiddendiv {
+  display: none;
 }
 
 .querycls{
@@ -35,21 +38,15 @@
 
 .w125{width:125px}
 
-.ffproxi_Bold{font-family:Latobold;}
-
 .fontbold{font-weight: bold !important;}
 
 .inp {
     width: 50%;
     padding: 12px 20px;
-    margin: 8px 0;
-    box-sizing: border-box;
-    background-position: 10px 10px;
-    background-repeat: no-repeat;
-    background-color: #f6ffff;
+    margin: 8px 0px;
+    background-color:white;
     color: black;
 }
-
 
 .logintextcls{
     width: 50%;
@@ -65,14 +62,17 @@
     box-sizing: border-box;
     border: 2px solid #ccc;
     border-radius: 4px;
-    background-color: #e9e9e9;
+    background-color:white;
     resize: none;
     height: 120px;
-    padding: 10px 20px;
+    padding: 10px 10px;
+    margin-top: 8px;
+    margin-bottom: 8px;
   }
 
   textarea:focus{
-    background-color: rgb(240, 241, 241);
+    background-color:lightgray;
+    border: 3px solid rgb(0, 0, 0);
   }
 
   .feedcls {

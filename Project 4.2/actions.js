@@ -35,21 +35,17 @@ let webSocketFunc = function() {
 }
 
 let beginRegistration = function() {
-  var registrationString = "Register&" + document.getElementById("registerInput").value
+  var registrationString = "Register&" + jQuery("#registerInput").val();
   divMsg = "Sent server a message to register user" + registrationString.substring(registrationString.indexOf("&") + 1, registrationString.length);
   sendToServer(registrationString);
-  document.getElementById("tweet").placeholder = "Please tweet here " + document.getElementById("registerInput").value + "";
-  document.getElementById("registerUserDiv").remove();
-  document.getElementById("tweetDiv").style.display = 'block';
-  document.getElementById("subscribeDiv").style.display = 'block';
-  document.getElementById("queryDivId").style.display = 'block';
-  document.getElementById("hashtagDivId").style.display = 'block';
-  document.getElementById("liveFeedId").style.display = 'block';
-  document.getElementById("queryperfDivId").style.display = 'block';
+  let placeholderStr = "Please tweet here "+ jQuery("#registerInput").val();
+  jQuery("#tweet").attr("placeholder",placeholderStr);
+  jQuery("#registerUserDiv").remove();
+  jQuery("#twitterhomepage").show();
 }
 
 let beginTweeting = function() {
-  var tweetString = "Tweet&" + document.getElementById("tweet").value
+  var tweetString = "Tweet&" + jQuery("#tweet").value();
   divMsg = "Your Tweet: " + tweetString.substring(tweetString.indexOf("&") + 1, tweetString.length);
   sendToServer(tweetString);
 }
@@ -60,7 +56,7 @@ let beginreTweeting = function(message) {
 }
 
 let beginSubscription = function() {
-  var subscriberString = "Subscribe&" + document.getElementById("subscribe").value
+  var subscriberString = "Subscribe&" + jQuery("#subscribe").value();
   divMsg = "Asking the server to subscribe the user" + subscriberString.substring(subscriberString.indexOf("&") + 1, subscriberString.length);
   sendToServer(subscriberString);
 
@@ -79,7 +75,7 @@ let getMentionedTweets = function() {
 }
 
 let getHashtags = function() {
-  var hashtagString = "QueryHash&" + document.getElementById("hashtagqueryinput").value;
+  var hashtagString = "QueryHash&" + jQuery("#hashtagqueryinput").value();
   divMsg = "All tweets with the hashtag you searched for";
   sendToServer(hashtagString);
 }
