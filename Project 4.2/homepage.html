@@ -1,0 +1,170 @@
+  
+﻿<!DOCTYPE html>
+
+<meta charset="utf-8" />
+
+<title>Twitter</title>
+<link rel="stylesheet" href="styles.css">
+<body>
+<h2 class="twitterHeaderCls">Twitter</h2>
+  <div id="liveFeedId" class="divcls1 hideDivCls fontbold">Feed</br></div>
+   <div id="registerUserDiv" class="signupdivcls fontbold">Sign up: </br><input id="registerInput" placeholder="Please enter a unique name" type="text" name = "fname" class="logintextcls" >
+   </br><input id="registrationInput" class="agbuttonenable" type= "button" value="Click"></div>
+   
+   <div id="subscribeDiv" class="hideDivCls fontbold"> Subscribe to other users: </br><input id="subscribe" type="text" name = "fname" class="inp">
+   </br><input id="subscribeInput" class="agbuttonenable" type= "button" value="Subscribe"></div>
+   <div id="tweetDiv" class="hideDivCls ffproxi_Bold fontbold"> Please tweet here: </br><textarea id="tweet" name = "fname" placeholder=""></textarea>
+   </br><input id="tweetInput" class="agbuttonenable" type= "button" value="Tweet"></div>
+  <div class="querycls hideDivCls fontbold" id="queryperfDivId">Query Performance</div>
+   <div id="hashtagDivId" class="hideDivCls fontbold"> Search for tweets with any hashtag: </br><input id="hashtagqueryinput" type="text" name = "fname" class="inp">
+   </br><input id="hashtags" class="agbuttonenable" type= "button" value="Search"></div>
+   
+   <div id="queryDivId" class="hideDivCls w125"><input id="mentioninput" class="agbuttonenable" type= "button" value="Get all tweets where I have been mentioned"></div>
+   
+</body>
+  <script language="javascript" type="text/javascript">
+
+  var websocketUrl = "ws://localhost:8080/websocket";
+  
+  var displayDiv= document.getElementById("liveFeedId");
+  bindFunction();
+  webSocketFunc();
+  var divMsg;
+ 
+ function bindFunction(){
+  var registrationButton = document.getElementById("registrationInput")
+  registrationButton.addEventListener('click', beginRegistration, false);
+
+  var tweetInputButton = document.getElementById("tweetInput")
+  tweetInputButton.addEventListener('click', beginTweeting, false);
+
+  var subscribeInputButton = document.getElementById("subscribeInput")
+  subscribeInputButton.addEventListener('click', beginSubscription, false);
+
+  var mentioninputButton = document.getElementById("mentioninput")
+  mentioninputButton.addEventListener('click',getMentionedTweets, false);
+
+  var hashTagButton = document.getElementById("hashtags")
+  hashTagButton.addEventListener('click',getHashtags,false);
+ }
+  
+  function beginRegistration()
+  {
+    var registrationString="Register&"+document.getElementById("registerInput").value
+    divMsg="Sent server a message to register user"+registrationString.substring(registrationString.indexOf("&")+1,registrationString.length);
+    sendToServer(registrationString);
+    document.getElementById("tweet").placeholder = "Please tweet here "+document.getElementById("registerInput").value+"";
+    document.getElementById("registerUserDiv").remove();
+    document.getElementById("tweetDiv").style.display = 'block';   
+    document.getElementById("subscribeDiv").style.display = 'block';  
+    document.getElementById("queryDivId").style.display = 'block';
+    document.getElementById("hashtagDivId").style.display = 'block'; 
+    document.getElementById("liveFeedId").style.display = 'block';
+    document.getElementById("queryperfDivId").style.display = 'block';     
+  }
+
+  function beginTweeting()
+  {
+    var tweetString="Tweet&"+document.getElementById("tweet").value
+    divMsg="Your Tweet: "+tweetString.substring(tweetString.indexOf("&")+1,tweetString.length);
+    sendToServer(tweetString);
+  }
+
+  function beginreTweeting(message)
+  {
+    var retweetString="ReTweet&"+message
+    sendToServer(retweetString);
+  }
+
+  function beginSubscription()
+  {
+    var subscriberString="Subscribe&"+document.getElementById("subscribe").value
+    divMsg="Asking the server to subscribe the user"+subscriberString.substring(subscriberString.indexOf("&")+1,subscriberString.length);
+    sendToServer(subscriberString);
+    
+  }
+  
+  function getHomePage()
+  {
+    var homepageString="HomePage&null";
+    divMsg="All your subscribers tweets";
+    sendToServer(homepageString);
+  }
+
+  function getMentionedTweets(){
+    var mentionedString="QueryMention&null";
+    divMsg="All tweets where you have been mentioned";
+    sendToServer(mentionedString);
+  }
+
+  function getHashtags(){
+    var hashtagString="QueryHash&"+document.getElementById("hashtagqueryinput").value;
+    divMsg="All tweets with the hashtag you searched for";
+    sendToServer(hashtagString);
+  }
+
+  function funcForMessaging(evt)
+  {
+    var divString=String(evt.data);
+    var isSubscriber=divString.startsWith("Your Subscriber");
+    if(isSubscriber){
+      var twt=divString.substring(divString.indexOf(":")+2,divString.length);
+      displayDivFunctionForRetweet('<span class="feedcls textfontcls" style="color: blue;">' + evt.data+'</span>',twt);  
+    }else
+      displayDivFunction('<span class="feedcls textfontcls" style="color: blue;">' + evt.data+'</span>');
+  }
+
+  function displayDivFunction(message)
+  {
+    var paraElement = document.createElement("p");
+    paraElement.style.wordWrap = "break-word";
+    var dateSpan = document.createElement('span')
+    var dateDiv = new Date().toLocaleTimeString();
+    dateSpan.className="timeCls1";
+    dateSpan.innerHTML = dateDiv;
+    paraElement.appendChild(dateSpan);
+    paraElement.innerHTML = message;
+    displayDiv.appendChild(paraElement);
+    
+  }
+
+  function displayDivFunctionForRetweet(message,twt)
+  {
+    var paraElement = document.createElement("p");
+    var btn = document.createElement("BUTTON");
+    btn.className = "agbuttonenable";
+    btn.innerHTML = "Retweet";
+    paraElement.style.wordWrap = "break-word";
+    paraElement.innerHTML = message;
+    displayDiv.appendChild(paraElement);
+    displayDiv.insertAdjacentElement("beforeend",btn);
+    btn.addEventListener('click', function(){
+    beginreTweeting(twt);
+}, false);
+  }
+
+  function displayErrorMsg(evt)
+  {
+    displayDivFunction('<span class="feedcls textfontcls" style="color: red;">ERROR:</span> ' + evt.data);
+  }
+
+  function sendToServer(message)
+  {
+    websocket.send(message);
+  }
+
+  function webSocketFunc()
+  {
+    websocket = new WebSocket(websocketUrl);
+    websocket.onopen = function(evt) { onOpenFunc(evt) };
+    websocket.onmessage = function(evt) { funcForMessaging(evt) };
+    websocket.onerror = function(evt) { displayErrorMsg(evt) };
+    
+  }
+
+  function onOpenFunc(evt)
+  { }
+
+</script>
+
+
