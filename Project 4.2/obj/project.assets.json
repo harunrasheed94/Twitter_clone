@@ -1478,11 +1478,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Haroon Rasheed\\Desktop\\Dos\\Project 4.2\\testapi\\testapi.fsproj",
+      "projectUniqueName": "C:\\Users\\Haroon Rasheed\\Documents\\GitHub\\Twitter_clone\\Project 4.2\\testapi.fsproj",
       "projectName": "testapi",
-      "projectPath": "C:\\Users\\Haroon Rasheed\\Desktop\\Dos\\Project 4.2\\testapi\\testapi.fsproj",
+      "projectPath": "C:\\Users\\Haroon Rasheed\\Documents\\GitHub\\Twitter_clone\\Project 4.2\\testapi.fsproj",
       "packagesPath": "C:\\Users\\Haroon Rasheed\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Haroon Rasheed\\Desktop\\Dos\\Project 4.2\\testapi\\obj\\",
+      "outputPath": "C:\\Users\\Haroon Rasheed\\Documents\\GitHub\\Twitter_clone\\Project 4.2\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Haroon Rasheed\\AppData\\Roaming\\NuGet\\NuGet.Config"

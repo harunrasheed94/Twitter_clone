@@ -253,6 +253,7 @@ let app : WebPart =
     path "/websocketWithSubprotocol" >=> handShakeWithSubprotocol (chooseSubprotocol "test") ws
     path "/websocketWithError" >=> handShake wsWithErrorHandling    
     GET >=> choose [ path "/" >=> file "homepage.html"; browseHome]
+    GET >=> choose [ path "/actions.js" >=> file "actions.js"]
     GET >=> choose [ path "/styles.css" >=> file "styles.css"]
     GET >=> choose [ path "/tweetImg.jpg" >=> file "tweetImg.jpg"]
     NOT_FOUND "Found no handlers." ]
