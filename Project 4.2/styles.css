@@ -11,13 +11,6 @@
   top: 10%; 
 }
 
-.divcls1 {
-    padding: 10px;
-    text-align: justify;
-    margin-top: 20px;
-    color: black;
-}
-
 .tweetdivcls {
     padding: 10px;
     text-align: justify;
@@ -29,7 +22,7 @@
 }
 
 .querycls{
-  border-bottom:1px solid #3098b9 !important;font-family:LatoSemibold;
+  border-bottom:1px solid #015872 !important;font-family:LatoSemibold;
   font-size: 1.714rem;
 }
 
@@ -74,10 +67,12 @@ input[type=text], select {
     border: 2px solid rgb(0, 0, 0);
   }
 
-  .feedcls {
-    border-radius: 5px;
-    padding: 10px;
-    margin: 10px 0;
+  .feedmaindivcls{
+    position: relative;
+    top: -25px;
+    width: 100%;
+    max-height: 50%;
+    overflow: auto;
   }
 
   .buttoncls {
@@ -108,14 +103,6 @@ input[type=text], select {
     color: #FFFFFF;
   }
 
-  .feedcls::after {
-    content: "";
-    clear: both;
-    display: table;
-    width: 100%;
-
-  }
-
   .twitterHeaderCls {
     font-family: 'LatoRegular',Arial,Helvetica,sans-serif;
     font-size: 30px;
@@ -130,12 +117,15 @@ input[type=text], select {
     border-radius: 6px;
   }
 
-  .textfontcls {
+  .feedbordercls { 
+    border: 1px solid #8b87af;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+  }
+
+  .feedtextfontcls {
     font-family: arial;
-    border-top: 1px dashed #4635e2;
-    border-bottom: 1px dashed #4635e2;
-    border-left: 1px dashed #4635e2;
-    border-right: 1px dashed #4635e2;
     font-size: 15px;
   }
 
@@ -144,6 +134,7 @@ input[type=text], select {
     height: 80%;
     overflow: auto;
     position: relative;
+    top: -25px;
   }
   
   .timeCls1 {

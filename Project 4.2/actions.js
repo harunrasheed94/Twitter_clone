@@ -2,7 +2,7 @@
 console.log("coming js")
 var websocketUrl = "ws://localhost:8080/websocket";
 var websocket;
-var displayDiv = document.getElementById("liveFeedId");
+var displayDiv = document.getElementById("liveFeed");
 var divMsg;
 
 let bindFunction = function() {
@@ -22,23 +22,41 @@ let bindFunction = function() {
     let uname = jQuery("#registerInput").val();
     if(uname != undefined && uname.length > 0){
       beginRegistration();
+      jQuery("#registerInput").val("");
+      jQuery("#registrationInput").prop("disabled",true);
     } 
   });
 
   jQuery("#tweetInput").on("click", function () {
-    beginTweeting();
+    let tweet = jQuery("#tweet").val();
+    if(tweet != undefined && tweet.length > 0){
+      beginTweeting();
+      jQuery("#tweet").val("");
+      jQuery("#tweetInput").prop("disabled",true);
+    }  
   });
 
   jQuery("#subscribeInput").on("click", function () {
-    beginSubscription();
+    let uname = jQuery("#subscribe").val();
+    if(uname != undefined && uname.length > 0){
+      beginSubscription();
+      jQuery("#subscribe").val("");
+      jQuery("#subscribeInput").prop("disabled",true);
+    }
+    
+  });
+
+  jQuery("#hashtags").on("click", function () {
+    let hashtag = jQuery("#hashtagqueryinput").val();
+    if(hashtag != undefined && hashtag.length > 0){
+      getHashtags();
+      jQuery("#hashtagqueryinput").val("");
+      jQuery("#hashtags").prop("disbled",true);
+    }
   });
 
   jQuery("#mentioninput").on("click", function () {
     getMentionedTweets();
-  });
-
-  jQuery("#hashtags").on("click", function () {
-    getHashtags();
   });
 }
 
@@ -60,7 +78,7 @@ let beginRegistration = function() {
 }
 
 let beginTweeting = function() {
-  var tweetString = "Tweet&" + jQuery("#tweet").value();
+  var tweetString = "Tweet&" + jQuery("#tweet").val();
   divMsg = "Your Tweet: " + tweetString.substring(tweetString.indexOf("&") + 1, tweetString.length);
   sendToServer(tweetString);
 }
@@ -71,7 +89,7 @@ let beginreTweeting = function(message) {
 }
 
 let beginSubscription = function() {
-  var subscriberString = "Subscribe&" + jQuery("#subscribe").value();
+  var subscriberString = "Subscribe&" + jQuery("#subscribe").val();
   divMsg = "Asking the server to subscribe the user" + subscriberString.substring(subscriberString.indexOf("&") + 1, subscriberString.length);
   sendToServer(subscriberString);
 
@@ -90,7 +108,7 @@ let getMentionedTweets = function() {
 }
 
 let getHashtags = function() {
-  var hashtagString = "QueryHash&" + jQuery("#hashtagqueryinput").value();
+  var hashtagString = "QueryHash&" + jQuery("#hashtagqueryinput").val();
   divMsg = "All tweets with the hashtag you searched for";
   sendToServer(hashtagString);
 }
@@ -100,22 +118,18 @@ let funcForMessaging = function(evt) {
   var isSubscriber = divString.startsWith("Your Subscriber");
   if (isSubscriber) {
     var twt = divString.substring(divString.indexOf(":") + 2, divString.length);
-    displayDivFunctionForRetweet('<span class="feedcls textfontcls" style="color: black;">' + evt.data + '</span>', twt);
+    displayDivFunctionForRetweet('<span class=" feedbordercls" style="color: black;">' + evt.data + '</span>', twt);
   } else
-    displayDivFunction('<span class="feedcls textfontcls" style="color: black;">' + evt.data + '</span>');
+    displayDivFunction(evt.data);
 }
 
 let displayDivFunction = function(message) {
-  var paraElement = document.createElement("div");
-  paraElement.style.wordWrap = "break-word";
-  var dateSpan = document.createElement('span')
-  var dateDiv = new Date().toLocaleTimeString();
-  dateSpan.className = "timeCls1";
-  dateSpan.innerHTML = dateDiv;
-  paraElement.appendChild(dateSpan);
-  paraElement.innerHTML = message;
-  displayDiv.appendChild(paraElement);
-
+  let parentDiv = jQuery("#liveFeed");
+  let cloneDiv = parentDiv.find(".defaultfeeddiv").clone();
+  cloneDiv.removeClass("defaultfeeddiv");
+  cloneDiv.find(".feedtxtspan").text(message);
+  parentDiv.append(cloneDiv);
+  cloneDiv.show();
 }
 
 let displayDivFunctionForRetweet = function(message, twt) {
@@ -133,7 +147,7 @@ let displayDivFunctionForRetweet = function(message, twt) {
 }
 
 let displayErrorMsg = function(evt) {
-  displayDivFunction('<span class="feedcls textfontcls" style="color: red;">ERROR:</span> ' + evt.data);
+  displayDivFunction('<span class=" feedbordercls" style="color: red;">ERROR:</span> ' + evt.data);
 }
 
 let sendToServer = function(message) {

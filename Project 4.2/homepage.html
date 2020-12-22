@@ -14,14 +14,19 @@
 </div> 
 <div id = "twittermaindiv" >
 <!--register div-->
-<div id="registerUserDiv" class="signupdivcls fontbold inputparentdiv">Sign up: </br>
+<div id="registerUserDiv" class="signupdivcls fontbold inputparentdiv"> </br>
 <input id="registerInput" placeholder="Please enter a unique name" type="text" name = "fname" class="logintextcls" >
 </br>
-<input id="registrationInput" class="buttoncls" type= "button" value="Click" disabled>
+<input id="registrationInput" class="buttoncls" type= "button" value="Sign Up" disabled>
 </div>
 <div id="twitterhomepage" style="display: none;" class="twittermaindivcls">
 <!--feed div-->
-  <div id="liveFeedId" class="divcls1 tweetdivcls tweetpagecls fontbold">Feed</br></div>
+  <div id="liveFeed" class="feedmaindivcls tweetdivcls tweetpagecls ">
+    <div style = "font-size: large;" class="fontbold">Feed:</div>
+    <div style="overflow-wrap: break-word;display:none;width: 97%;" class="feedcls defaultfeeddiv feedbordercls">
+      <span style="color: black;" class="feedtxtspan feedtextfontcls"></span>
+    </div>
+  </div>
   
    <!--subscribe div-->
    <div id="subscribeDiv" class=" tweetpagecls tweetdivcls inputparentdiv fontbold"> 
@@ -43,7 +48,7 @@
   </div>
    <!--mention div-->
    <div id="mentionDiv" class=" tweetpagecls tweetdivcls w125">
-     <input id="mentioninput" class="buttoncls" type= "button" value="Get all tweets where I have been mentioned" disabled>
+     <input id="mentioninput" class="buttoncls" type= "button" value="Get all tweets where I have been mentioned">
     </div>
   </div>
 </div>
