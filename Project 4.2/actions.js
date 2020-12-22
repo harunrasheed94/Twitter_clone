@@ -6,8 +6,23 @@ var displayDiv = document.getElementById("liveFeedId");
 var divMsg;
 
 let bindFunction = function() {
+  jQuery("#twittermaindiv").on("keyup","input[type='text'],textarea",function(){
+    let thisElem = jQuery(this);
+    let typedString = thisElem.val();
+    let parentDiv = thisElem.closest(".inputparentdiv");
+    if(typedString.length > 0){
+       parentDiv.find(".buttoncls").prop("disabled",false);
+    }
+    else{
+      parentDiv.find(".buttoncls").prop("disabled",true);
+    }  
+  });
+
   jQuery("#registrationInput").on("click", function () {
-    beginRegistration();
+    let uname = jQuery("#registerInput").val();
+    if(uname != undefined && uname.length > 0){
+      beginRegistration();
+    } 
   });
 
   jQuery("#tweetInput").on("click", function () {
@@ -40,7 +55,7 @@ let beginRegistration = function() {
   sendToServer(registrationString);
   let placeholderStr = "Please tweet here "+ jQuery("#registerInput").val();
   jQuery("#tweet").attr("placeholder",placeholderStr);
-  jQuery("#registerUserDiv").remove();
+  jQuery("#registerUserDiv").hide();
   jQuery("#twitterhomepage").show();
 }
 
@@ -106,7 +121,7 @@ let displayDivFunction = function(message) {
 let displayDivFunctionForRetweet = function(message, twt) {
   var paraElement = document.createElement("p");
   var btn = document.createElement("BUTTON");
-  btn.className = "agbuttonenable";
+  btn.className = "buttoncls";
   btn.innerHTML = "Retweet";
   paraElement.style.wordWrap = "break-word";
   paraElement.innerHTML = message;
