@@ -57,7 +57,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                         printfn "Register Server has been called %s %s" functionality clientStr
                         response<-"Username "+clientStr+" has been Succesfully logged in"
                         if allActorDict.ContainsKey(clientStr) then 
-                             response<-"Welcome Back "+clientStr+", You are already a user in twiiter"
+                             response<-"Welcome Back "+clientStr+", You are already a user in twitter"
                         else
                              allActorDict.Add(clientStr,webSocket)
                              actorTweets.Add(webSocket,new List<string>())

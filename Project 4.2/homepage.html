@@ -8,28 +8,45 @@
 </head>
 <title>Twitter</title>
 <link rel="stylesheet" href="styles.css">
-<body>
-<h2 class="twitterHeaderCls">Twitter</h2>
+<body style="overflow: hidden;">
+ <div>
+<h2 class="twitterHeaderCls" style="height: 5%; width: 100%;">Twitter</h2>
+</div> 
+<div id = "twittermaindiv" >
 <!--register div-->
-<div id="registerUserDiv" class="signupdivcls fontbold">Sign up: </br><input id="registerInput" placeholder="Please enter a unique name" type="text" name = "fname" class="logintextcls" >
-</br><input id="registrationInput" class="agbuttonenable" type= "button" value="Click"></div>
-<div id="twitterhomepage" style="display: none;">
+<div id="registerUserDiv" class="signupdivcls fontbold inputparentdiv">Sign up: </br>
+<input id="registerInput" placeholder="Please enter a unique name" type="text" name = "fname" class="logintextcls" >
+</br>
+<input id="registrationInput" class="buttoncls" type= "button" value="Click" disabled>
+</div>
+<div id="twitterhomepage" style="display: none;" class="twittermaindivcls">
 <!--feed div-->
   <div id="liveFeedId" class="divcls1 tweetdivcls tweetpagecls fontbold">Feed</br></div>
   
    <!--subscribe div-->
-   <div id="subscribeDiv" class=" tweetpagecls tweetdivcls fontbold"> <span>Subscribe to other users:</span> </br><input id="subscribe" type="text" name = "fname" class="inp">
-   </br><input id="subscribeInput" class="agbuttonenable" type= "button" value="Subscribe"></div>
-   <!--tweet div-->
-   <div id="tweetDiv" class=" tweetpagecls tweetdivcls fontbold"> <span>Please tweet here:</span> </br><textarea id="tweet" name = "fname" placeholder=""></textarea>
-   </br><input id="tweetInput" class="agbuttonenable" type= "button" value="Tweet"></div>
-  <div class="querycls  tweetpagecls fontbold" id="queryperfDivId">Query Performance</div>
-  <!--hashtag div-->
-  <div id="hashtagDivId" class=" tweetpagecls tweetdivcls fontbold"> Search for tweets with any hashtag: </br><input id="hashtagqueryinput" type="text" name = "fname" class="inp">
-   </br><input id="hashtags" class="agbuttonenable" type= "button" value="Search"></div>
-   <!--mention div-->
-   <div id="queryDivId" class=" tweetpagecls tweetdivcls w125"><input id="mentioninput" class="agbuttonenable" type= "button" value="Get all tweets where I have been mentioned"></div>
+   <div id="subscribeDiv" class=" tweetpagecls tweetdivcls inputparentdiv fontbold"> 
+     <span>Subscribe to other users:</span> </br>
+     <input id="subscribe" type="text" name = "fname" class="">
+   </br><input id="subscribeInput" class="buttoncls" type= "button" value="Subscribe" disabled>
   </div>
+   <!--tweet div-->
+   <div id="tweetDiv" class=" tweetpagecls tweetdivcls inputparentdiv fontbold">
+      <span>Please tweet here:</span> </br>
+      <textarea id="tweet" name = "fname" placeholder=""></textarea>
+   </br><input id="tweetInput" class="buttoncls" type= "button" value="Tweet" disabled>
+  </div>
+  <div class="querycls tweetpagecls fontbold" id="queryperfDivId">Query Performance</div>
+  <!--hashtag div-->
+  <div id="hashtagDivId" class=" tweetpagecls inputparentdiv tweetdivcls fontbold"> Search for tweets with any hashtag: </br>
+    <input id="hashtagqueryinput" type="text" name = "fname" class="">
+   </br><input id="hashtags" class="buttoncls" type= "button" value="Search" disabled>
+  </div>
+   <!--mention div-->
+   <div id="mentionDiv" class=" tweetpagecls tweetdivcls w125">
+     <input id="mentioninput" class="buttoncls" type= "button" value="Get all tweets where I have been mentioned" disabled>
+    </div>
+  </div>
+</div>
    <script src = "actions.js"></script>  
 </body>
 
