@@ -135,6 +135,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                     let key,str=actorTweets.TryGetValue webSocket
                     str.Add(clientStr)
                     response<-"You have Retweeted : "+clientStr
+                    let mutable retweet = "You have Retweeted : "+clientStr
                     let byteResponse =
                                   response
                                   |> System.Text.Encoding.ASCII.GetBytes
@@ -142,6 +143,20 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
 
                         // the `send` function sends a message back to the client
                     do! webSocket.send Text byteResponse true
+
+                    //send the retweet to all my subscribers
+                    let key1,sockets=mySubscriber.TryGetValue webSocket
+
+                    for item in sockets do
+                         response<-"Your Subscriber "+allNameDict.Item(webSocket)+" has retweeted : "+clientStr
+                         let byteResponse =
+                                  response
+                                  |> System.Text.Encoding.ASCII.GetBytes
+                                  |> ByteSegment
+
+                        
+                         do! item.send Text byteResponse true
+
            | "Subscribe"-> 
                     printfn "Subscribe Server has been called %s %s" functionality clientStr
                     let subscriberWebSocket=allActorDict.Item(clientStr)
@@ -169,7 +184,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                        let k,socket= allActorDict.TryGetValue item
                        let k1,tweetList= actorTweets.TryGetValue socket
                        let tstring=tweetList.Item(tweetList.Count-1)
-                       response<-"Your Subcriber "+item+"'s latest tweet : "+tstring
+                       response<-"Your Subscriber "+item+"'s latest tweet : "+tstring
                        let byteResponse =
                                   response
                                   |> System.Text.Encoding.ASCII.GetBytes
