@@ -18,6 +18,14 @@ let bindFunction = function() {
     }  
   });
 
+  jQuery("#twittermaindiv").on("click",".Retweetbtncls",function(){
+      let thisElem = jQuery(this);
+      if(thisElem.hasClass("Retweetbtncls")){
+        let tweet = thisElem.data('tweet');
+        beginreTweeting(tweet);
+      }
+  })
+
   jQuery("#registrationInput").on("click", function () {
     let uname = jQuery("#registerInput").val();
     if(uname != undefined && uname.length > 0){
@@ -42,8 +50,7 @@ let bindFunction = function() {
       beginSubscription();
       jQuery("#subscribe").val("");
       jQuery("#subscribeInput").prop("disabled",true);
-    }
-    
+    }  
   });
 
   jQuery("#hashtags").on("click", function () {
@@ -118,12 +125,12 @@ let funcForMessaging = function(evt) {
   var isSubscriber = divString.startsWith("Your Subscriber");
   if (isSubscriber) {
     var twt = divString.substring(divString.indexOf(":") + 2, divString.length);
-    displayDivFunctionForRetweet('<span class=" feedbordercls" style="color: black;">' + evt.data + '</span>', twt);
+    retweetFeedDisplayFunction( evt.data, twt);
   } else
-    displayDivFunction(evt.data);
+    feedDisplayFunction(evt.data);
 }
 
-let displayDivFunction = function(message) {
+let feedDisplayFunction = function(message) {
   let parentDiv = jQuery("#liveFeed");
   let cloneDiv = parentDiv.find(".defaultfeeddiv").clone();
   cloneDiv.removeClass("defaultfeeddiv");
@@ -132,22 +139,23 @@ let displayDivFunction = function(message) {
   cloneDiv.show();
 }
 
-let displayDivFunctionForRetweet = function(message, twt) {
-  var paraElement = document.createElement("p");
-  var btn = document.createElement("BUTTON");
-  btn.className = "buttoncls";
-  btn.innerHTML = "Retweet";
-  paraElement.style.wordWrap = "break-word";
-  paraElement.innerHTML = message;
-  displayDiv.appendChild(paraElement);
-  displayDiv.insertAdjacentElement("beforeend", btn);
-  btn.addEventListener('click', function () {
-    beginreTweeting(twt);
-  }, false);
+let retweetFeedDisplayFunction = function(message,twt){
+  let parentDiv = jQuery("#liveFeed");
+  let cloneDiv = parentDiv.find(".defaultfeeddiv").clone();
+  cloneDiv.removeClass("defaultfeeddiv");
+  cloneDiv.find(".feedtxtspan").text(message);
+  parentDiv.append(cloneDiv);
+  let retweetButton = jQuery('<button/>',{
+    text:'Retweet',
+    class:'Retweetbtncls buttoncls',
+  });
+  retweetButton.data("tweet",twt);
+  cloneDiv.after(retweetButton);
+  cloneDiv.show();
 }
 
 let displayErrorMsg = function(evt) {
-  displayDivFunction('<span class=" feedbordercls" style="color: red;">ERROR:</span> ' + evt.data);
+  feedDisplayFunction('<span class=" feedbordercls" style="color: red;">ERROR:</span> ' + evt.data);
 }
 
 let sendToServer = function(message) {

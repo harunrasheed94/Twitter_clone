@@ -134,7 +134,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                     printfn "ReTweet Server has been called %s %s" functionality clientStr
                     let key,str=actorTweets.TryGetValue webSocket
                     str.Add(clientStr)
-                    response<-"You have ReTweeted : "+clientStr
+                    response<-"You have Retweeted : "+clientStr
                     let byteResponse =
                                   response
                                   |> System.Text.Encoding.ASCII.GetBytes
