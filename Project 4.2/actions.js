@@ -70,7 +70,7 @@ let bindFunction = function() {
 let webSocketFunc = function() {
   websocket = new WebSocket(websocketUrl);
   websocket.onopen = function (evt) { onOpenFunc(evt) };
-  websocket.onmessage = function (evt) { funcForMessaging(evt) };
+  websocket.onmessage = function (evt) { receiveMessagefromServer(evt) };
   websocket.onerror = function (evt) { displayErrorMsg(evt) };
 }
 
@@ -120,7 +120,8 @@ let getHashtags = function() {
   sendToServer(hashtagString);
 }
 
-let funcForMessaging = function(evt) {
+let receiveMessagefromServer = function(evt) {
+
   var divString = String(evt.data);
   var isSubscriber = divString.startsWith("Your Subscriber");
   if (isSubscriber) {
@@ -128,12 +129,18 @@ let funcForMessaging = function(evt) {
     retweetFeedDisplayFunction( evt.data, twt);
   } else
     feedDisplayFunction(evt.data);
+    // if (divString.startsWith("Welcome Back")){
+    //   let homepageString = "HomePage&null";
+    //   sendToServer(homepageString)
+    // }
 }
 
 let feedDisplayFunction = function(message) {
   let parentDiv = jQuery("#liveFeed");
   let cloneDiv = parentDiv.find(".defaultfeeddiv").clone();
   cloneDiv.removeClass("defaultfeeddiv");
+  message = String(message);
+  console.log(message)
   cloneDiv.find(".feedtxtspan").text(message);
   parentDiv.append(cloneDiv);
   cloneDiv.show();

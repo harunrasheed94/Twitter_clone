@@ -162,6 +162,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                     let subscriberWebSocket=allActorDict.Item(clientStr)
                     let mutable key,str=mySubscription.TryGetValue webSocket
                     str.Add(clientStr)
+                    printfn "mysubscription %A" str
                     let keySub,strSub=mySubscriber.TryGetValue subscriberWebSocket
                     strSub.Add(webSocket)
                     response<-"You have successfully subscribed to: "+clientStr
@@ -180,6 +181,7 @@ let ws (webSocket : WebSocket) (context: HttpContext) =
                     printfn "showing home page"
                     let key1,clientList=mySubscription.TryGetValue webSocket
                     
+                    printfn "%A" clientList
                     for item in clientList do
                        let k,socket= allActorDict.TryGetValue item
                        let k1,tweetList= actorTweets.TryGetValue socket
